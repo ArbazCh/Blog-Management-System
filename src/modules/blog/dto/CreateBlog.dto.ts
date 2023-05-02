@@ -1,6 +1,6 @@
 import { IsNotEmpty, Length } from "class-validator";
 
-export class CreatBlogDto {
+export class CreateBlogDto {
 
     @IsNotEmpty()
     @Length(3, 255)

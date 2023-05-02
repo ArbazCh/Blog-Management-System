@@ -3,10 +3,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { typeOrmConfig } from './config/typeorm.config';
-import { BlogController } from './modules/blog/controllers/blog.controller';
+import { BlogService } from './modules/blog/services/blog.service';
+import { BlogModule } from './modules/blog/blog.module';
 @Module({
-  imports: [TypeOrmModule.forRoot(typeOrmConfig)],
-  controllers: [AppController, BlogController],
+  imports: [BlogModule, TypeOrmModule.forRoot(typeOrmConfig)],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule { }

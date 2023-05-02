@@ -4,35 +4,41 @@
 // Users must be able to update their own blog posts.
 // Users must be able to delete their own blog posts.
 
-import { Controller, Delete, Get, Post, Put } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Post, Put, UsePipes, ValidationPipe, ParseIntPipe, Param } from "@nestjs/common";
+import { BlogService } from "../services/blog.service";
+import { CreateBlogDto } from "../dto/CreateBlog.dto"
+import { stringify } from "querystring";
 
 
 @Controller('blog')
 export class BlogController {
+    constructor(private readonly blogService: BlogService) { }
 
     @Post('/create')
-    createBlog() {
-        return "1. New Blog Post Created"
+    @UsePipes(ValidationPipe)
+
+    async createBlog(@Body() blogData: CreateBlogDto) {
+        return await this.blogService.createBlog(blogData)
     }
 
     @Get('/')
-    getAllBlogs() {
-        return "2. All Blogs are here"
+    async getAllBlogs() {
+        return await this.blogService.getAllBlogs()
     }
 
     @Get('/detail/:id')
-    blogDetail() {
-        return "Here is the complete of detail of the blog"
+    async blogDetail(@Param('id', ParseIntPipe) id: number) {
+        return await this.blogService.blogDetail(id)
     }
 
     @Put('/update/:id')
-    updateBlog() {
-        return "Blog Updated"
+    async updateBlog(@Param('id', ParseIntPipe) id: number, @Body('body') updatedBody: string) {
+        return await this.blogService.updateBlog(id, updatedBody)
     }
 
     @Delete('/delete/:id')
-    deleteBlog() {
-        return "Blog Deleted"
+    async deleteBlog(@Param('id', ParseIntPipe) id: number) {
+        return await this.blogService.deleteBlog(id)
     }
 
 }
