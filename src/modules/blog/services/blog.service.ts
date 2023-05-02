@@ -24,5 +24,4 @@ export class BlogService {
     deleteBlog(id: number) {
         return this.blogRepository.delete(id)
     }
-
 }
