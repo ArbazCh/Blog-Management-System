@@ -16,4 +16,4 @@ export class UserController {
     async userRegisteration(@Body() userRegister: CreateUserDto) {
         return await this.userService.userRegisteration(userRegister)
     }
-}
+}  

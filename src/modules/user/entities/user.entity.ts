@@ -1,8 +1,8 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany, BaseEntity, BeforeInsert } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn, BaseEntity, BeforeInsert } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
-@Entity('user')
-
+@Entity('users')
+//
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
