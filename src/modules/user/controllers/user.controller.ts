@@ -3,7 +3,7 @@
 // Users must be able to log out of the application.
 // Users must be able to reset their password in case they forget it.
 
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, Get } from "@nestjs/common";
 import { UserService } from "../services/user.service";
 import { CreateUserDto } from "../dto/createUser.dto";
 

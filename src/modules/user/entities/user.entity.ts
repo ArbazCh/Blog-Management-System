@@ -1,8 +1,9 @@
 import { Column, Entity, PrimaryGeneratedColumn, BaseEntity, BeforeInsert } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import { IsNotEmpty } from 'class-validator';
 
 @Entity('users')
-//
+
 export class User extends BaseEntity {
     @PrimaryGeneratedColumn()
     id: number;
