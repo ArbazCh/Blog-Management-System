@@ -9,26 +9,28 @@ export class AuthService {
         private userService: UserService,
         private jwtService: JwtService
     ) { }
-    async validateUserCred(email, password) {
-        const user = await this.userService.getUserByEmail(email)
+    async validateUserCred(email: string, password: string) {
+        try {
+            // console.log(email, password)
+            const user = await this.userService.getUserByEmail(email)
+            if (!user) throw new BadRequestException();
+            if (!(await bcrypt.compare(password, user.password)))
+                throw new UnauthorizedException();
+            return user
 
-        if (!user) throw new BadRequestException();
+        } catch (error) {
+            console.log("auth service: ", error)
+        }
 
-        if (!(await bcrypt.compare(password, user.password)))
-            throw new UnauthorizedException();
+    }
 
-        console.log("user: ", user)
-
-        //Token Generate against user
-
-
-        const access_token = this.jwtService.sign({
-            name: user.name,
-            sub: user.id,
-        })
-        // console.log(access_token)
-        return access_token
-
-
+    generateToken(user: any) {
+        console.log("generate token")
+        return {
+            access_token: this.jwtService.sign({
+                name: user.name,
+                sub: user.id,
+            }),
+        };
     }
 }
