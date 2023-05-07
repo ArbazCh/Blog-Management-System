@@ -11,7 +11,7 @@ import { JwtStrategy } from "./strategies/jwt.strategy";
 
 @Module({
     imports: [UserModule, PassportModule, JwtModule.registerAsync(jwtConfig)],
-    providers: [AuthService, LocalStrategy, JwtStrategy, UserService],
+    providers: [AuthService, LocalStrategy, JwtStrategy],
     controllers: [AuthController]
 })
 export class AuthModule { }

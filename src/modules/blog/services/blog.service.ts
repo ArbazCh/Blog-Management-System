@@ -3,13 +3,15 @@ import { InjectRepository } from "@nestjs/typeorm";
 import { Blog } from "../entities/blog.entity";
 import { Repository } from "typeorm";
 import { CreateBlogDto } from "../dto/CreateBlog.dto";
+import { User } from "src/modules/user/entities/user.entity";
 
 @Injectable()
 
 export class BlogService {
     constructor(@InjectRepository(Blog) private blogRepository: Repository<Blog>) { }
 
-    async createBlog(blog: CreateBlogDto) {
+    async createBlog(blog: CreateBlogDto, userId: number) {
+
         return await this.blogRepository.save(blog)
     }
     async getAllBlogs() {
