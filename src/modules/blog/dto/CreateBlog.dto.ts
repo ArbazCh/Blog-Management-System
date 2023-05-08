@@ -14,6 +14,6 @@ export class CreateBlogDto {
     @Length(3, 255)
     body: string;
 
-    @IsNotEmpty()
-    userId: number
+    // @IsNotEmpty()
+    // userId: number
 }

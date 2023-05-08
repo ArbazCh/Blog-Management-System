@@ -17,28 +17,35 @@ export class BlogController {
     @UsePipes(ValidationPipe)
 
     async createBlog(@Body() blogData: CreateBlogDto, @Request() req) {
+        // console.log("req: ", req.user)
         const { sub: userId } = req.user
         return await this.blogService.createBlog(blogData, userId)
     }
 
     @Get('/')
     async getAllBlogs(@Request() req) {
-        return await this.blogService.getAllBlogs()
+
+        const { sub: userId } = req.user
+        // console.log("req: ", userId)
+        return await this.blogService.getAllBlogs(userId)
     }
 
     @Get('/detail/:id')
     async blogDetail(@Param('id', ParseIntPipe) id: number, @Request() req) {
-        return await this.blogService.blogDetail(id)
+        const { sub: userId } = req.user
+        return await this.blogService.blogDetail(id, userId)
     }
 
     @Put('/update/:id')
     async updateBlog(@Param('id', ParseIntPipe) id: number, @Body('body') updatedBody: string, @Request() req) {
-        return await this.blogService.updateBlog(id, updatedBody)
+        const { sub: userId } = req.user
+        return await this.blogService.updateBlog(id, updatedBody, userId)
     }
 
     @Delete('/delete/:id')
     async deleteBlog(@Param('id', ParseIntPipe) id: number, @Request() req) {
-        return await this.blogService.deleteBlog(id)
+        const { sub: userId } = req.user
+        return await this.blogService.deleteBlog(id, userId)
     }
 
 }

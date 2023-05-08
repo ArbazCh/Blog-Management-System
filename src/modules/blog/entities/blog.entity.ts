@@ -20,4 +20,7 @@ export class Blog extends BaseEntity {
 
     @ManyToOne(() => User, (user) => user.blogs)
     user: User
+
+    @Column({ nullable: true })
+    userId: number
 }

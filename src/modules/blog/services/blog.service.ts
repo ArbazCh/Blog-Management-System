@@ -11,19 +11,24 @@ export class BlogService {
     constructor(@InjectRepository(Blog) private blogRepository: Repository<Blog>) { }
 
     async createBlog(blog: CreateBlogDto, userId: number) {
+        const newBlog = new Blog()
+        newBlog.userId = userId;
+        newBlog.title = blog.title;
+        newBlog.description = blog.description;
+        newBlog.body = blog.body;
 
-        return await this.blogRepository.save(blog)
+        return await this.blogRepository.save(newBlog)
     }
-    async getAllBlogs() {
-        return await this.blogRepository.find()
+    async getAllBlogs(userId: number) {
+        return await this.blogRepository.find({ where: { userId: userId } })
     }
-    async blogDetail(id: number) {
-        return await this.blogRepository.find({ where: { id: id } })
+    async blogDetail(id: number, userId: number) {
+        return await this.blogRepository.find({ where: { id: id, userId: userId } })
     }
-    updateBlog(id: number, updatedBody: string) {
-        return this.blogRepository.update(id, { body: updatedBody })
+    updateBlog(id: number, updatedBody: string, userId: number) {
+        return this.blogRepository.update({ id, userId }, { body: updatedBody })
     }
-    deleteBlog(id: number) {
-        return this.blogRepository.delete(id)
+    deleteBlog(id: number, userId: number) {
+        return this.blogRepository.delete({ id, userId })
     }
 }
