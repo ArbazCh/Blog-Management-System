@@ -8,6 +8,7 @@ import { UserModule } from './modules/user/user.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { ApiTokenCheckMiddleware } from './middleware/token-check.middleware';
 import { BlogController } from './modules/blog/controllers/blog.controller';
+import { CommentController } from './modules/blog/controllers/comment.controller';
 @Module({
   imports: [BlogModule, UserModule, AuthModule, TypeOrmModule.forRoot(typeOrmConfig)],
   controllers: [AppController],
@@ -17,6 +18,9 @@ export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(ApiTokenCheckMiddleware)
-      .forRoutes(BlogController) // Controller name only { path: '/blog', method: RequestMethod.ALL }
+      .exclude(
+        {path:'blog/all', method:RequestMethod.GET},
+        {path:'blog/:id', method:RequestMethod.GET})
+      .forRoutes(BlogController, CommentController) // Controller name only { path: '/blog', method: RequestMethod.ALL }
   }
 }

@@ -11,7 +11,7 @@ export class CreateBlogDto {
     description: string;
 
     @IsNotEmpty()
-    @Length(3, 255)
+    // @Length(3, 255)
     body: string;
 
     // @IsNotEmpty()

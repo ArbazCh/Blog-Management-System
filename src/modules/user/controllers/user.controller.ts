@@ -6,14 +6,15 @@
 import { Body, Controller, Post } from "@nestjs/common";
 import { UserService } from "../services/user.service";
 import { CreateUserDto } from "../dto/createUser.dto";
+import { User } from "../entities/user.entity";
 
-@Controller('/user')
+@Controller('user')
 export class UserController {
     constructor(private userService: UserService) { }
 
     @Post('/register')
 
-    async userRegisteration(@Body() userRegister: CreateUserDto) {
+    async userRegisteration(@Body() userRegister: CreateUserDto): Promise<User> {
         return await this.userService.userRegisteration(userRegister)
     }
 }
